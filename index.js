@@ -31,6 +31,14 @@ async function run() {
 
     const toyCollection = client.db("toyTrackers").collection("toys");
 
+
+     // toy get api
+     app.get('/toys', async(req, res) => {
+      const cursor = toyCollection.find();
+      const result = await cursor.toArray();
+      res.send(result)
+    })
+
      //toy post api 
      app.post('/toys', async(req, res) => {
       const toy = req.body;
