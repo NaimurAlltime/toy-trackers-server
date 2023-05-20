@@ -47,6 +47,18 @@ async function run() {
       res.send(result);
     })
 
+
+      // toy get api sum data with user email
+      app.get('/mytoys', async(req, res) =>{
+        let query = {}
+        if(req.query?.email){
+          query = {email: req.query.email}
+        }
+        const cursor = toyCollection.find(query)
+        const result = await cursor.toArray();
+        res.send(result)
+      })
+
      //toy post api 
      app.post('/toys', async(req, res) => {
       const toy = req.body;
@@ -75,5 +87,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Toy trackers server is running on por: ${port}`);
+    console.log(`Toy trackers server is running on port: ${port}`);
 })
