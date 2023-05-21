@@ -35,7 +35,7 @@ async function run() {
 
      // toy get api
      app.get('/toys', async(req, res) => {
-      const cursor = toyCollection.find();
+      const cursor = toyCollection.find().limit(20);
       const result = await cursor.toArray();
       res.send(result)
     })
@@ -113,6 +113,20 @@ async function run() {
         res.send(data);
     });
 
+
+    // toy name search 
+    // const indexKeys = { title: 1, subCategory: 1 }; 
+    // const indexOptions = { toyName: "titleCategory" };
+    // const result = await toyCollection.createIndex(indexKeys, indexOptions);
+    app.get('/toySearch/:search', async (req, res) => {
+      const searchText = req.params.search;
+      const result = await toyCollection.find({
+        $or: [
+          { toyName: { $regex: searchText, $options: "i" } },
+          { subCategory: { $regex: searchText, $options: "i" } },],
+      }).toArray();
+      res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
