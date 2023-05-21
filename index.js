@@ -103,6 +103,16 @@ async function run() {
       res.send(result)
     })
 
+    // get api with subcategory 
+    app.get("/subCategory/:category", async (req, res) => {
+      const category = req.params.category;
+      const data = await toyCollection.find({
+        sabCategory: { $eq: category }
+      })
+        .toArray();
+        res.send(data);
+    });
+
 
 
     // Send a ping to confirm a successful connection
