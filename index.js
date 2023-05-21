@@ -30,6 +30,7 @@ async function run() {
 
 
     const toyCollection = client.db("toyTrackers").collection("toys");
+    const blogCollection = client.db("toyTrackers").collection("toyBlogs");
 
 
      // toy get api
@@ -92,6 +93,14 @@ async function run() {
       const query = {_id: new ObjectId(id) };
       const result = await toyCollection.deleteOne(query);
       res.send(result);
+    })
+
+
+     // toy blog get api
+     app.get('/blogs', async(req, res) => {
+      const cursor = blogCollection.find();
+      const result = await cursor.toArray();
+      res.send(result)
     })
 
 
